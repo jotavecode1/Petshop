@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AmigoPet — Casa de Ração e Pet Shop | Peça pelo WhatsApp</title>
+<meta name="description" content="Rações, farmácia veterinária, brinquedos e acessórios. Monte seu pedido e receba em casa.">
+<meta name="theme-color" content="#0B5E63">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --teal:#0B5E63; --teal-2:#0E7A80; --teal-cl:#E2F2F2; --teal-esc:#063C40;
+  --laranja:#FF8A3D; --laranja-cl:#FFF0E3; --laranja-tx:#8A3D00;
+  --creme:#FFFBF5; --branco:#FFF; --tinta:#141A1B; --cinza:#65726F; --linha:#E7E4DD;
+  --wa:#1DA851;
+  --fd:"Bricolage Grotesque",system-ui,sans-serif;
+  --fb:"Inter",system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--creme);color:var(--tinta);font-family:var(--fb);font-size:15.5px;line-height:1.6;
+     -webkit-font-smoothing:antialiased;padding-bottom:96px}
+.wrap{max-width:1080px;margin:0 auto;padding:0 16px}
+h1,h2,h3{font-family:var(--fd);letter-spacing:-.024em;line-height:1.12}
+button{font:inherit;cursor:pointer;border:none;background:none;color:inherit}
+img{display:block;max-width:100%}
+
+.demo{background:var(--laranja);color:#3D1B00;font-size:13px;text-align:center;padding:10px 16px;font-weight:600}
+
+/* ---- topo com foto ---- */
+.topo{position:relative;color:#fff;isolation:isolate;overflow:hidden}
+.topo .bg{position:absolute;inset:0;z-index:-2;background-size:cover;background-position:center 55%;transform:scale(1.01)}
+.topo::after{content:"";position:absolute;inset:0;z-index:-1;
+  background:linear-gradient(105deg,rgba(6,45,48,.95) 0%,rgba(6,45,48,.82) 46%,rgba(6,45,48,.42) 100%)}
+.nav{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 0}
+.marca{display:flex;align-items:center;gap:12px}
+.logo{width:52px;height:52px;border-radius:16px;background:var(--laranja);color:var(--teal-esc);
+  display:grid;place-items:center;flex:none;box-shadow:0 8px 24px rgba(0,0,0,.16)}
+.logo svg{width:38px;height:38px}
+.marca b{font-family:var(--fd);font-size:21px;font-weight:800;display:block;line-height:1.1}
+.marca span{font-size:11.5px;opacity:.8;letter-spacing:.08em;text-transform:uppercase}
+.navzap{background:var(--wa);color:#fff;font-size:13.5px;font-weight:600;padding:10px 18px;border-radius:999px;
+  text-decoration:none;display:inline-flex;align-items:center;gap:7px;white-space:nowrap}
+.navzap svg{width:16px;height:16px;fill:currentColor}
+.chamada{padding:58px 0 48px;max-width:700px}
+.chamada h1{font-size:clamp(30px,5.4vw,50px);font-weight:800}
+.chamada h1 em{font-style:normal;color:var(--laranja)}
+.chamada p{margin-top:14px;font-size:17px;opacity:.9;max-width:44ch}
+.selos{display:flex;gap:8px;flex-wrap:wrap;margin-top:24px}
+.selo{font-size:12.5px;font-weight:600;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.24);
+  padding:7px 14px;border-radius:999px;display:inline-flex;align-items:center;gap:6px;backdrop-filter:blur(6px)}
+.selo.destaque{background:var(--laranja);color:#3D1B00;border-color:var(--laranja)}
+.selo svg{width:13px;height:13px;fill:currentColor}
+
+/* ---- ferramentas ---- */
+.tools{position:sticky;top:0;z-index:20;background:var(--creme);border-bottom:1px solid var(--linha);padding:12px 0 0}
+.busca{position:relative}
+.busca svg{position:absolute;left:14px;top:50%;transform:translateY(-50%);width:17px;height:17px;fill:var(--cinza)}
+.busca input{width:100%;font:inherit;font-size:15px;padding:12px 14px 12px 42px;border:1px solid var(--linha);
+  border-radius:11px;background:var(--branco);color:var(--tinta)}
+.busca input:focus{outline:none;border-color:var(--teal)}
+.cats{display:flex;gap:8px;overflow-x:auto;padding:12px 0;scrollbar-width:none}
+.cats::-webkit-scrollbar{display:none}
+.cat{white-space:nowrap;font-size:14px;font-weight:500;padding:9px 16px;border-radius:999px;
+  border:1px solid var(--linha);background:var(--branco);color:var(--cinza);transition:all .18s}
+.cat:hover{border-color:var(--teal);color:var(--teal)}
+.cat.on{background:var(--teal);border-color:var(--teal);color:#fff}
+
+/* ---- produtos ---- */
+.sec{padding:24px 0 6px}
+.sec h2{font-size:20px;font-weight:600}
+.sec .qt{font-size:13.5px;color:var(--cinza);margin-bottom:14px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px}
+.p{background:var(--branco);border:1px solid var(--linha);border-radius:16px;overflow:hidden;
+   display:flex;flex-direction:column;transition:transform .22s,box-shadow .22s,border-color .22s}
+.p:hover{transform:translateY(-3px);border-color:#CDD8D5;box-shadow:0 14px 30px -18px rgba(0,0,0,.35)}
+.foto{position:relative;aspect-ratio:4/3;background:#fff;overflow:hidden;display:grid;place-items:center}
+.foto img{width:100%;height:100%;object-fit:contain;padding:10px;transition:transform .4s}
+.p:hover .foto img{transform:scale(1.05)}
+.fita{position:absolute;left:10px;top:10px;font-size:11px;font-weight:700;letter-spacing:.03em;
+  padding:5px 10px;border-radius:7px;background:var(--laranja);color:#3D1B00}
+.fita.frio{background:var(--teal);color:#fff}
+.corpo{padding:14px;display:flex;flex-direction:column;flex:1}
+.p .marca-p{font-size:11px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--laranja-tx)}
+.p h3{font-size:16px;font-weight:600;margin-top:3px}
+.p .desc{font-size:13px;color:var(--cinza);margin-top:5px;line-height:1.5}
+.pesos{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
+.pe{font-size:12.5px;font-weight:500;padding:6px 11px;border-radius:8px;border:1px solid var(--linha);
+    background:var(--creme);color:var(--cinza);transition:all .16s}
+.pe:hover{border-color:var(--teal)}
+.pe.on{background:var(--teal);border-color:var(--teal);color:#fff}
+.rod{margin-top:auto;padding-top:13px;display:flex;align-items:flex-end;justify-content:space-between;gap:10px}
+.preco b{font-family:var(--fd);font-size:22px;font-weight:800;letter-spacing:-.03em;display:block;line-height:1}
+.preco span{font-size:12px;color:var(--cinza)}
+.add{background:var(--teal);color:#fff;font-size:13.5px;font-weight:600;padding:10px 15px;border-radius:9px;
+  display:inline-flex;align-items:center;gap:6px;transition:background .18s,transform .12s;white-space:nowrap}
+.add:hover{background:var(--teal-2)}
+.add:active{transform:scale(.95)}
+.add.feito{background:var(--wa)}
+.add svg{width:14px;height:14px;fill:currentColor}
+.vazio{text-align:center;padding:48px 0;color:var(--cinza)}
+
+/* ---- barra e gaveta ---- */
+.barra{position:fixed;left:0;right:0;bottom:0;z-index:40;background:var(--teal-esc);color:#fff;
+  transform:translateY(105%);transition:transform .3s cubic-bezier(.2,.7,.2,1);
+  box-shadow:0 -10px 34px -12px rgba(0,0,0,.5)}
+.barra.on{transform:none}
+.barra .in{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px 0}
+.barra .n{font-size:13px;opacity:.85}
+.barra .tot{font-family:var(--fd);font-size:22px;font-weight:800}
+.barra .ver{background:var(--laranja);color:#3D1B00;font-weight:700;font-size:15px;padding:13px 24px;border-radius:10px}
+.fundo{position:fixed;inset:0;z-index:50;background:rgba(4,20,22,.55);opacity:0;pointer-events:none;transition:opacity .28s}
+.fundo.on{opacity:1;pointer-events:auto}
+.gav{position:fixed;right:0;top:0;bottom:0;z-index:51;width:min(440px,100%);background:var(--creme);
+  transform:translateX(100%);transition:transform .32s cubic-bezier(.2,.7,.2,1);display:flex;flex-direction:column}
+.gav.on{transform:none}
+.gh{display:flex;align-items:center;justify-content:space-between;padding:18px 20px;
+  border-bottom:1px solid var(--linha);background:var(--branco)}
+.gh h2{font-size:19px;font-weight:600}
+.fechar{width:34px;height:34px;border-radius:9px;display:grid;place-items:center;background:var(--creme)}
+.fechar svg{width:17px;height:17px;fill:var(--tinta)}
+.gb{flex:1;overflow-y:auto;padding:18px 20px}
+.it{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--linha);align-items:flex-start}
+.it .mini{width:52px;height:52px;border-radius:10px;object-fit:cover;flex:none}
+.it .txt{flex:1;min-width:0}
+.it b{font-size:14.5px;font-weight:600;display:block}
+.it span{font-size:12.5px;color:var(--cinza)}
+.it .pr{font-weight:600;white-space:nowrap;font-size:14.5px}
+.mais{display:flex;align-items:center;gap:9px;margin-top:6px}
+.mais button{width:26px;height:26px;border-radius:7px;border:1px solid var(--linha);background:var(--branco);
+  font-weight:600;line-height:1;color:var(--cinza)}
+.mais button:hover{border-color:var(--teal);color:var(--teal)}
+.mais b{font-size:14px;min-width:18px;text-align:center}
+.campo{margin-top:16px}
+.campo label{display:block;font-size:12.5px;font-weight:600;color:var(--cinza);margin-bottom:6px}
+.campo input,.campo textarea,.campo select{width:100%;font:inherit;font-size:15px;padding:11px 13px;
+  border:1px solid var(--linha);border-radius:9px;background:var(--branco);color:var(--tinta)}
+.campo textarea{min-height:62px;resize:vertical}
+.campo input:focus,.campo textarea:focus,.campo select:focus{outline:none;border-color:var(--teal)}
+.opc{display:flex;gap:8px}
+.opc button{flex:1;font-size:14px;font-weight:500;padding:11px;border-radius:9px;border:1px solid var(--linha);
+  background:var(--branco);color:var(--cinza)}
+.opc button.on{background:var(--teal);border-color:var(--teal);color:#fff}
+.gf{border-top:1px solid var(--linha);padding:18px 20px;background:var(--branco)}
+.linha{display:flex;justify-content:space-between;font-size:14px;color:var(--cinza);margin-bottom:6px}
+.linha b{color:var(--wa);font-weight:600}
+.linha.total{font-size:18px;color:var(--tinta);font-weight:600;margin:10px 0 14px;padding-top:10px;
+  border-top:1px solid var(--linha)}
+.falta{background:var(--laranja-cl);color:var(--laranja-tx);font-size:13px;border-radius:9px;
+  padding:10px 13px;margin-bottom:12px;line-height:1.5}
+.enviar{width:100%;background:var(--wa);color:#fff;font-size:16px;font-weight:600;padding:15px;border-radius:11px;
+  display:flex;align-items:center;justify-content:center;gap:10px;transition:background .18s}
+.enviar:hover{background:#179143}
+.enviar svg{width:20px;height:20px;fill:currentColor}
+.vaziocart{text-align:center;padding:60px 20px;color:var(--cinza)}
+
+/* ---- faixas ---- */
+.como{background:var(--teal-cl);margin-top:40px;padding:44px 0}
+.como h2{font-size:clamp(22px,3.2vw,30px);font-weight:800;text-align:center}
+.como .g{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-top:28px}
+.passo{background:var(--branco);border-radius:14px;padding:22px;border:1px solid #CFE3E2}
+.passo .n{font-family:var(--fd);font-size:13px;font-weight:800;color:var(--laranja);letter-spacing:.1em}
+.passo b{font-family:var(--fd);font-size:17px;font-weight:600;display:block;margin:8px 0 6px}
+.passo p{font-size:14px;color:var(--cinza);line-height:1.6}
+
+.loja{background:var(--teal-esc);color:#fff;padding:48px 0}
+.loja .g{display:grid;grid-template-columns:1.1fr .9fr;gap:34px;align-items:center}
+.loja h2{font-size:clamp(23px,3.4vw,32px);font-weight:800}
+.loja p{margin-top:14px;opacity:.85;line-height:1.7;max-width:48ch}
+.dados{margin-top:24px;display:grid;gap:10px}
+.dado{display:flex;gap:12px;align-items:flex-start;font-size:14.5px}
+.dado svg{width:18px;height:18px;fill:var(--laranja);flex:none;margin-top:3px}
+.dado b{font-weight:600}
+.mosaico{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.mosaico img{width:100%;height:100%;object-fit:cover;border-radius:14px;aspect-ratio:1}
+.mosaico img:first-child{grid-column:span 2;aspect-ratio:2/1.05}
+
+.flut{position:fixed;right:20px;bottom:88px;z-index:39;width:54px;height:54px;border-radius:50%;
+  background:var(--wa);display:grid;place-items:center;box-shadow:0 12px 30px -8px rgba(29,168,81,.8);
+  text-decoration:none;transition:transform .22s}
+.flut:hover{transform:scale(1.08)}
+.flut svg{width:28px;height:28px;fill:#fff}
+
+@media(max-width:760px){
+  .loja .g{grid-template-columns:1fr}
+  .chamada{padding:34px 0 32px}
+}
+@media(max-width:480px){
+  .grid{grid-template-columns:1fr 1fr;gap:10px}
+  .corpo{padding:11px}
+  .p h3{font-size:14.5px}
+  .p .desc{display:none}
+  .preco b{font-size:19px}
+  .add{padding:9px 12px;font-size:12.5px}
+  .navzap span{display:none}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<div class="demo">AmigoPet · catálogo online com fotos reais dos produtos · personalize telefone, endereço, preços e estoque</div>
+
+<header class="topo">
+  <div class="bg" id="capa"></div>
+  <div class="wrap">
+    <div class="nav">
+      <div class="marca">
+        <div class="logo" aria-label="Logo AmigoPet"><svg viewBox="0 0 64 64" aria-hidden="true"><path fill="currentColor" d="M32 8c-6 0-10 6-10 11 0 2 .5 4 1.5 5.5C18 24 11 29 11 37c0 10 8 17 18 17h6c10 0 18-7 18-17 0-8-7-13-12.5-12.5C41.5 23 42 21 42 19c0-5-4-11-10-11Zm-8 13c-3 0-6-3-6-7s3-6 6-6 5 3 5 7c0 3-2 6-5 6Zm16 0c-3 0-5-3-5-6 0-4 2-7 5-7s6 2 6 6-3 7-6 7ZM24 37c0-2 2-3 4-3 1 0 3 1 4 2 1-1 3-2 4-2 2 0 4 1 4 3 0 3-4 6-8 6s-8-3-8-6Z"/><circle cx="25" cy="32" r="2.2" fill="#fff"/><circle cx="39" cy="32" r="2.2" fill="#fff"/></svg></div>
+        <div><b>AmigoPet</b><span>Casa de ração &amp; pet shop</span></div>
+      </div>
+      <a class="navzap" href="#" id="zapTopo" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.7 4.8-1.3A10 10 0 1 0 12 2zm5.8 14.2c-.2.7-1.4 1.3-2 1.4-.5.1-1.1.1-1.8-.1-.4-.1-1-.3-1.7-.6-3-1.3-4.9-4.3-5.1-4.5-.1-.2-1.2-1.5-1.2-2.9s.7-2 1-2.3c.2-.3.5-.4.7-.4h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .6l-.4.5-.3.3c-.1.1-.2.3-.1.5.1.2.6 1.1 1.4 1.8 1 .9 1.8 1.1 2 1.2.2.1.4.1.5-.1l.8-.9c.2-.2.3-.2.5-.1l2 1c.2.1.4.2.4.3.1.2.1.7-.1 1.3z"/></svg>
+        <span>Falar no WhatsApp</span></a>
+    </div>
+    <div class="chamada">
+      <h1>A ração do seu pet, <em>sem precisar perguntar o preço</em>.</h1>
+      <p>Monte o pedido aqui, escolha a marca e o peso, e a gente entrega na sua casa. Leva menos de um minuto.</p>
+      <div class="selos">
+        <span class="selo destaque">
+          <svg viewBox="0 0 24 24"><path d="M3 6h13v9H3zm14 3h3l2 3v3h-5zM7 20a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm11 0a2 2 0 1 1 0-4 2 2 0 0 1 0 4z"/></svg>
+          Entrega grátis acima de R$ 150</span>
+        <span class="selo" id="selAberto"></span>
+        <span class="selo">Pix, cartão ou dinheiro</span>
+        <span class="selo">Mais de 20 marcas</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="tools">
+  <div class="wrap">
+    <div class="busca">
+      <svg viewBox="0 0 24 24"><path d="M10 2a8 8 0 1 0 4.9 14.3l5.4 5.4 1.4-1.4-5.4-5.4A8 8 0 0 0 10 2zm0 2a6 6 0 1 1 0 12 6 6 0 0 1 0-12z"/></svg>
+      <input type="search" id="q" placeholder="Buscar ração, marca ou produto…" aria-label="Buscar produto">
+    </div>
+    <div class="cats" id="cats"></div>
+  </div>
+</div>
+
+<main class="wrap"><div id="lista"></div></main>
+
+<section class="como">
+  <div class="wrap">
+    <h2>Como funciona</h2>
+    <div class="g">
+      <div class="passo"><span class="n">01</span><b>Escolha os produtos</b>
+        <p>Navegue por categoria ou busque pela marca. Selecione o peso e adicione ao carrinho.</p></div>
+      <div class="passo"><span class="n">02</span><b>Preencha os dados</b>
+        <p>Nome, endereço e forma de pagamento. Ou escolha retirar na loja, se preferir.</p></div>
+      <div class="passo"><span class="n">03</span><b>Envie pelo WhatsApp</b>
+        <p>O pedido abre já escrito, com itens e total somado. Você só aperta enviar.</p></div>
+      <div class="passo"><span class="n">04</span><b>Receba em casa</b>
+        <p>Confirmamos a disponibilidade e combinamos o horário da entrega. Simples assim.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="loja">
+  <div class="wrap g">
+    <div>
+      <h2>Uma casa de ração de bairro, com jeito de loja grande</h2>
+      <p>Atendimento de quem conhece o seu pet pelo nome, com a variedade e o preço de quem
+        compra direto da fábrica. Marcas premium, super premium e linha básica, farmácia veterinária
+        completa, brinquedos e acessórios.</p>
+      <div class="dados">
+        <div class="dado">
+          <svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6a2.5 2.5 0 0 1 0 5.5z"/></svg>
+          <span><b>Endereço da loja</b><br>Rua Exemplo, 000 — Centro</span></div>
+        <div class="dado">
+          <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm1 10.6l4 2.3-1 1.7-5-2.9V6h2z"/></svg>
+          <span><b>Horário</b><br>Seg a sex 8h–19h · Sáb 8h–15h · Dom 8h–12h</span></div>
+        <div class="dado">
+          <svg viewBox="0 0 24 24"><path d="M6.6 10.8a15 15 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.4 0 .8-.2 1z"/></svg>
+          <span><b>WhatsApp</b><br>(00) 00000-0000</span></div>
+      </div>
+    </div>
+    <div class="mosaico" id="mosaico"></div>
+  </div>
+</section>
+
+<div class="barra" id="barra"><div class="wrap in">
+  <div><div class="n" id="barraQt">0 itens</div><div class="tot" id="barraTot">R$ 0,00</div></div>
+  <button class="ver" id="abrir">Ver meu pedido</button>
+</div></div>
+
+<div class="fundo" id="fundo"></div>
+<aside class="gav" id="gav" aria-label="Seu pedido">
+  <div class="gh"><h2>Seu pedido</h2>
+    <button class="fechar" id="fechar" aria-label="Fechar"><svg viewBox="0 0 24 24"><path d="M19 6.4L17.6 5 12 10.6 6.4 5 5 6.4 10.6 12 5 17.6 6.4 19 12 13.4 17.6 19 19 17.6 13.4 12z"/></svg></button>
+  </div>
+  <div class="gb" id="gb"></div>
+  <div class="gf" id="gf"></div>
+</aside>
+
+<a class="flut" href="#" id="zapFlut" target="_blank" rel="noopener" aria-label="Falar no WhatsApp">
+  <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.7 4.8-1.3A10 10 0 1 0 12 2zm5.8 14.2c-.2.7-1.4 1.3-2 1.4-.5.1-1.1.1-1.8-.1-.4-.1-1-.3-1.7-.6-3-1.3-4.9-4.3-5.1-4.5-.1-.2-1.2-1.5-1.2-2.9s.7-2 1-2.3c.2-.3.5-.4.7-.4h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .6l-.4.5-.3.3c-.1.1-.2.3-.1.5.1.2.6 1.1 1.4 1.8 1 .9 1.8 1.1 2 1.2.2.1.4.1.5-.1l.8-.9c.2-.2.3-.2.5-.1l2 1c.2.1.4.2.4.3.1.2.1.7-.1 1.3z"/></svg>
+</a>
+
+<script>
+/* ═══════════════════ LOJA — troque por cliente ═══════════════════ */
+const LOJA = {
+  nome:   "AmigoPet",
+  fone:   "5518999999999",       // WhatsApp que recebe os pedidos
+  taxa:   9.90,                  // taxa de entrega
+  gratis: 150.00,                // entrega grátis acima deste valor
+  horas:  [[8,12],[8,19],[8,19],[8,19],[8,19],[8,19],[8,15]]  // dom, seg…sáb
+};
+
+/* ═══════════════════ FOTOS ═══════════════════
+   Imagens reais de embalagens/produtos e foto de loja.
+   Para trocar por fotos próprias, use URLs completas. */
+const CDN = id => id.startsWith("http") ? id
+  : `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=520&h=390&q=72`;
+const CAPA = "https://dcomercio.com.br/public/upload/gallery/imagens/dcomercio-lojapetland-divulgacao.jpg";
+const MOSAICO = [CAPA, "https://petxbrasil.com/cdn/shop/files/GoldenCaoAd.Carne15kg.png?v=1732358595", "https://images.tcdn.com.br/img/img_prod/999401/racao_royal_canin_maxi_adult_para_caes_adultos_de_racas_grandes_a_partir_de_15_meses_de_idade_15kg_768_1_0a8b87859fac6b13c24102f8e2fb8daf.jpg", "https://lojatudodebicho.fbitsstatic.net/img/p/racao-golden-gatos-filhotes-sabor-frango-3kg-157687/348271-1.jpg?h=824&v=202607231440&w=824"];
+
+/* ═══════════════════ PRODUTOS ═══════════════════ */
+const PRODUTOS = [
+{cat:"Ração para cães", marca:"Golden", nome:"Golden Fórmula Adultos", img:"https://petxbrasil.com/cdn/shop/files/GoldenCaoAd.Carne15kg.png?v=1732358595",
+ desc:"Frango e carne, para cães adultos de porte médio e grande.", fita:"Mais vendida",
+ pesos:[["3 kg",64.90],["15 kg",229.90],["20 kg",289.90]]},
+{cat:"Ração para cães", marca:"Premier", nome:"Premier Raças Específicas", img:"https://premierpet.com.br/wp-content/uploads/2023/08/PremieR-Racas-Especificas-Pug-Adultos-75kg-Lateral-Fechada.png",
+ desc:"Formulada por raça, com fibras para digestão e pelagem.", fita:"Super premium",
+ pesos:[["2,5 kg",89.90],["12 kg",349.90],["20 kg",519.90]]},
+{cat:"Ração para cães", marca:"Special Dog", nome:"Special Dog Premium Adulto", img:"https://www.specialdog.com.br/assets/uploads/produtos/special-dog-vegetais-adultos-2561y-20260316200935.png",
+ desc:"Boa aceitação e preço acessível para quem tem mais de um cão.", fita:"",
+ pesos:[["15 kg",164.90],["20 kg",209.90]]},
+{cat:"Ração para cães", marca:"Pedigree", nome:"Pedigree Adulto Carne", img:"https://www.pedigree.com.br/cdn-cgi/image/format%3Dauto%2Cq%3D90/sites/g/files/fnmzdf2401/files/2025-02/7896029075715_0_Hero-removebg-preview.png",
+ desc:"Carne e vegetais, para cães adultos de todos os portes.", fita:"",
+ pesos:[["1 kg",21.90],["10,1 kg",139.90],["20 kg",249.90]]},
+{cat:"Ração para cães", marca:"Golden", nome:"Golden Filhotes", img:"https://amepettatix.vtexassets.com/arquivos/ids/171728-150-auto?aspect=true&height=auto&v=638253754492570000&width=150",
+ desc:"Grãos menores e com DHA, para filhotes até 12 meses.", fita:"Filhote",
+ pesos:[["3 kg",72.90],["15 kg",249.90]]},
+{cat:"Ração para cães", marca:"Royal Canin", nome:"Royal Canin Maxi Adult", img:"https://images.tcdn.com.br/img/img_prod/999401/racao_royal_canin_maxi_adult_para_caes_adultos_de_racas_grandes_a_partir_de_15_meses_de_idade_15kg_768_1_0a8b87859fac6b13c24102f8e2fb8daf.jpg",
+ desc:"Específica para cães adultos acima de 26 kg.", fita:"Porte grande",
+ pesos:[["10,1 kg",399.90],["15 kg",549.90]]},
+{cat:"Ração para cães", marca:"Premier", nome:"Premier Cães Sênior", img:"https://premierpet.com.br/wp-content/uploads/2020/11/MOCKUP-LATERAL-AMB-SENIOR-PP-PORT-ESP-12-KG-RGB-2025.png",
+ desc:"Para cães acima de 7 anos, com suporte articular.", fita:"Idoso",
+ pesos:[["2 kg",84.90],["12 kg",359.90]]},
+{cat:"Ração para cães", marca:"Golden", nome:"Golden Power Cães Ativos", img:"https://petmaxi.fbitsstatic.net/img/p/racao-golden-power-training-para-caes-adultos-frango-e-arroz-15-kg-169023/353046.jpg?h=525&v=no-value&w=525",
+ desc:"Mais energia para cães de trabalho ou muito ativos.", fita:"",
+ pesos:[["15 kg",239.90],["20 kg",299.90]]},
+
+{cat:"Ração para gatos", marca:"Whiskas", nome:"Whiskas Adulto Carne", img:"https://www.whiskas.com.br/cdn-cgi/image/width%3D472%2Cheight%3D472%2Cf%3Dauto%2Cquality%3D90/sites/g/files/fnmzdf8986/files/migrate-product-files/images/25eadcafa8fc3c9357490ae905b4de6b3858ae49.png",
+ desc:"Ração seca para gatos adultos, sabor carne.", fita:"Mais vendida",
+ pesos:[["500 g",16.90],["3 kg",74.90],["10,1 kg",219.90]]},
+{cat:"Ração para gatos", marca:"Premier", nome:"Premier Gatos Castrados", img:"https://www.petnautasloja.com.br/arquivos/ids/35405-1000-1000/racao-premier-formula-gatos-castrados-salmao-1-5kg.jpg",
+ desc:"Salmão, com controle de peso e saúde urinária.", fita:"Castrado",
+ pesos:[["500 g",34.90],["1,5 kg",89.90],["7,5 kg",379.90]]},
+{cat:"Ração para gatos", marca:"Golden", nome:"Golden Gatos Filhotes", img:"https://lojatudodebicho.fbitsstatic.net/img/p/racao-golden-gatos-filhotes-sabor-frango-3kg-157687/348271-1.jpg?h=824&v=202607231440&w=824",
+ desc:"Para gatinhos de 2 a 12 meses.", fita:"Filhote",
+ pesos:[["1 kg",42.90],["3 kg",114.90]]},
+{cat:"Ração para gatos", marca:"Vários", nome:"Areia sanitária higiênica", img:"https://static.petz.com.br/fotos/1598981998662.jpg",
+ desc:"Grânulos que aglomeram e controlam odor por mais tempo.", fita:"",
+ pesos:[["4 kg",22.90],["12 kg",54.90]]},
+
+{cat:"Farmácia", marca:"MSD", nome:"Bravecto antipulgas", img:"https://cobasi.vteximg.com.br/arquivos/ids/1068384-1500-1500/Bravecto-Caes-Transdermal-500mg-2.webp?v=638756780319400000",
+ desc:"Comprimido com proteção prolongada. Informe o peso do cão.", fita:"Sob orientação",
+ pesos:[["4,5 a 10 kg",179.90],["10 a 20 kg",189.90],["20 a 40 kg",199.90]]},
+{cat:"Farmácia", marca:"Vários", nome:"Vermífugo de amplo espectro", img:"https://http2.mlstatic.com/D_NQ_NP_694628-MLB44888295083_022021-O.webp",
+ desc:"Para cães e gatos. Dosagem conforme o peso do animal.", fita:"Sob orientação",
+ pesos:[["Até 10 kg",29.90],["Acima de 10 kg",44.90]]},
+{cat:"Farmácia", marca:"Vários", nome:"Suplemento articular", img:"https://www.vettreat.com/cdn/shop/files/Glucosamine.jpg?v=1762859919",
+ desc:"Condroitina e glucosamina, para cães idosos ou de porte grande.", fita:"Idoso",
+ pesos:[["30 comprimidos",89.90]]},
+
+{cat:"Brinquedos", marca:"Vários", nome:"Bola de borracha resistente", img:"https://down-br.img.susercontent.com/file/sg-11134201-22110-t33vz54p2hjv80",
+ desc:"Aguenta mordida forte e flutua na água.", fita:"",
+ pesos:[["Pequena",24.90],["Grande",34.90]]},
+{cat:"Brinquedos", marca:"Vários", nome:"Mordedor recheável", img:"https://down-br.img.susercontent.com/file/sg-11134201-22110-t33vz54p2hjv80",
+ desc:"Recheie com petisco e entretém o cão por bastante tempo.", fita:"",
+ pesos:[["Unidade",49.90]]},
+{cat:"Brinquedos", marca:"Vários", nome:"Corda de algodão", img:"https://www.mascotasana.es/media/catalog/product/cache/5a2463601dfa3f591ec457cef0583db7/g/r/great_small_cuerda_con_forma_de_hueso_con_4_nudos_60cm.png",
+ desc:"Ajuda na limpeza dos dentes durante a brincadeira.", fita:"Dental",
+ pesos:[["Média",19.90],["Grande",29.90]]},
+
+{cat:"Petiscos", marca:"Vários", nome:"Bifinho de carne", img:"https://images.tcdn.com.br/img/img_prod/992079/petisco_doguitos_para_caes_adultos_e_filhotes_rodizio_bifinho_de_carne_65g_3723_1_30802048561e20512f9e8462f18ccc5e.jpg",
+ desc:"Petisco macio, ideal para treino e recompensa.", fita:"Treino",
+ pesos:[["50 g",8.90],["500 g",69.90]]},
+{cat:"Petiscos", marca:"Pedigree", nome:"Dentastix", img:"https://www.pedigree.com.br/cdn-cgi/image/format%3Dauto%2Cq%3D90/sites/g/files/fnmzdf2401/files/2022-08/PED-Product-Range-ImagesAdult_Large_OralCare.png",
+ desc:"Petisco diário que ajuda a reduzir o tártaro.", fita:"Dental",
+ pesos:[["Pequeno · 7 un",26.90],["Médio · 7 un",32.90]]},
+
+{cat:"Acessórios", marca:"Vários", nome:"Coleira peitoral com guia", img:"https://www.mascotasana.es/media/catalog/product/cache/5a2463601dfa3f591ec457cef0583db7/g/r/great_small_cuerda_con_forma_de_hueso_con_4_nudos_60cm.png",
+ desc:"Ajustável, com alça acolchoada e fecho reforçado.", fita:"",
+ pesos:[["P",39.90],["M",49.90],["G",59.90]]},
+{cat:"Acessórios", marca:"Vários", nome:"Coleira de identificação", img:"https://img.elo7.com.br/product/zoom/49D9CCE/coleira-de-cachorro-com-plaqueta-nome-e-telefone-pets-cachorro.jpg",
+ desc:"Com plaquinha gravada na hora, sem custo extra.", fita:"Grátis gravar",
+ pesos:[["P",29.90],["M",34.90],["G",39.90]]},
+{cat:"Acessórios", marca:"Vários", nome:"Roupinha de inverno", img:"https://www.gosupps.com/media/catalog/product/cache/25/image/1500x/040ec09b1e35df139433887a97daa66f/7/1/710Dr4i255L._AC_SL1500_.jpg",
+ desc:"Moletom com forro, para cães de pelo curto.", fita:"",
+ pesos:[["P",44.90],["M",54.90],["G",64.90]]},
+{cat:"Acessórios", marca:"Vários", nome:"Caminha almofadada", img:"https://www.gosupps.com/media/catalog/product/cache/25/image/1500x/040ec09b1e35df139433887a97daa66f/7/1/710Dr4i255L._AC_SL1500_.jpg",
+ desc:"Capa removível e lavável na máquina.", fita:"",
+ pesos:[["M",89.90],["G",129.90],["GG",169.90]]},
+
+{cat:"Higiene", marca:"Vários", nome:"Shampoo neutro", img:"https://agrosolo.fbitsstatic.net/img/p/shampoo-neutro-astor-banho-em-casa-300ml-mundo-animal-86388/281924.jpg?h=700&v=no-value&w=700",
+ desc:"Uso frequente em cães e gatos, não altera o pH da pele.", fita:"",
+ pesos:[["500 ml",29.90],["5 L",139.90]]},
+{cat:"Higiene", marca:"Vários", nome:"Tapete higiênico", img:"https://amepettatix.vtexassets.com/arquivos/ids/186457-150-auto?aspect=true&height=auto&v=638520140817200000&width=150",
+ desc:"Camada absorvente com gel, para filhotes e apartamento.", fita:"Filhote",
+ pesos:[["30 unidades",39.90],["50 unidades",59.90]]},
+{cat:"Higiene", marca:"Vários", nome:"Escova removedora de pelos", img:"https://agrosolo.fbitsstatic.net/img/p/shampoo-neutro-astor-banho-em-casa-300ml-mundo-animal-86388/281924.jpg?h=700&v=no-value&w=700",
+ desc:"Cerdas de silicone, não machuca a pele.", fita:"",
+ pesos:[["Unidade",34.90]]}
+];
+
+/* ═══════════════════ funcionamento ═══════════════════ */
+const $ = id => document.getElementById(id);
+const brl = v => "R$ " + v.toFixed(2).replace(".", ",");
+const cats = ["Todos", ...new Set(PRODUTOS.map(p => p.cat))];
+let catAtiva = "Todos", busca = "", escolha = {}, carrinho = [], entrega = "entrega";
+
+const zapBase = "https://wa.me/" + LOJA.fone;
+$("zapTopo").href = zapBase + "?text=" + encodeURIComponent("Olá! Vim pelo catálogo.");
+$("zapFlut").href = $("zapTopo").href;
+$("capa").style.backgroundImage =
+  `url(${CAPA})`;
+$("mosaico").innerHTML = MOSAICO.map((id) =>
+  `<img src="${id}" alt="" loading="lazy">`).join("");
+
+(function(){
+  const ag = new Date(), h = LOJA.horas[ag.getDay()], agora = ag.getHours() + ag.getMinutes()/60;
+  const aberto = h && agora >= h[0] && agora < h[1];
+  $("selAberto").innerHTML =
+    '<svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm1 10.6l4 2.3-1 1.7-5-2.9V6h2z"/></svg>'
+    + (aberto ? "Aberto agora" : "Fechado — peça mesmo assim");
+})();
+
+$("cats").innerHTML = cats.map(c =>
+  `<button class="cat${c === catAtiva ? " on" : ""}" data-c="${c}">${c}</button>`).join("");
+$("cats").addEventListener("click", e => {
+  const b = e.target.closest(".cat"); if (!b) return;
+  catAtiva = b.dataset.c;
+  [...$("cats").children].forEach(x => x.classList.toggle("on", x === b));
+  render();
+});
+$("q").addEventListener("input", e => { busca = e.target.value.trim().toLowerCase(); render(); });
+
+function render(){
+  const vis = PRODUTOS.filter(p =>
+    (catAtiva === "Todos" || p.cat === catAtiva) &&
+    (!busca || (p.nome + " " + p.marca + " " + p.desc).toLowerCase().includes(busca)));
+
+  if (!vis.length){ $("lista").innerHTML = '<p class="vazio">Nada encontrado. Tente outra marca ou peso.</p>'; return; }
+
+  const grupos = {};
+  vis.forEach(p => (grupos[p.cat] = grupos[p.cat] || []).push(p));
+
+  $("lista").innerHTML = Object.entries(grupos).map(([cat, itens]) => `
+    <section class="sec"><h2>${cat}</h2>
+      <p class="qt">${itens.length} ${itens.length === 1 ? "produto" : "produtos"}</p>
+      <div class="grid">${itens.map(p => {
+        const i = PRODUTOS.indexOf(p), sel = escolha[i] || 0, [rot, preco] = p.pesos[sel];
+        const frio = /orienta|Dental|Filhote|Idoso|Castrado/.test(p.fita);
+        return `<article class="p">
+          <div class="foto">
+            <img src="${CDN(p.img)}" alt="${p.nome}" loading="lazy">
+            ${p.fita ? `<span class="fita${frio ? " frio" : ""}">${p.fita}</span>` : ""}
+          </div>
+          <div class="corpo">
+            <span class="marca-p">${p.marca}</span>
+            <h3>${p.nome}</h3>
+            <p class="desc">${p.desc}</p>
+            <div class="pesos">${p.pesos.map(([r], k) =>
+               `<button class="pe${k === sel ? " on" : ""}" data-p="${i}" data-k="${k}">${r}</button>`).join("")}</div>
+            <div class="rod">
+              <div class="preco"><b>${brl(preco)}</b><span>${rot}</span></div>
+              <button class="add" data-add="${i}">
+                <svg viewBox="0 0 24 24"><path d="M11 5h2v6h6v2h-6v6h-2v-6H5v-2h6z"/></svg>Add</button>
+            </div>
+          </div>
+        </article>`;
+      }).join("")}</div>
+    </section>`).join("");
+}
+
+$("lista").addEventListener("click", e => {
+  const pe = e.target.closest(".pe");
+  if (pe){ escolha[pe.dataset.p] = +pe.dataset.k; render(); return; }
+  const add = e.target.closest(".add");
+  if (!add) return;
+  const i = +add.dataset.add, sel = escolha[i] || 0, p = PRODUTOS[i];
+  const [rot, preco] = p.pesos[sel];
+  const achou = carrinho.find(x => x.i === i && x.sel === sel);
+  if (achou) achou.n++;
+  else carrinho.push({ i, sel, n: 1, nome: p.nome, rot, preco, img: p.img });
+  add.classList.add("feito"); add.textContent = "Ok";
+  setTimeout(() => { add.classList.remove("feito");
+    add.innerHTML = '<svg viewBox="0 0 24 24"><path d="M11 5h2v6h6v2h-6v6h-2v-6H5v-2h6z"/></svg>Add'; }, 900);
+  atualizar();
+});
+
+const subtotal = () => carrinho.reduce((s, x) => s + x.preco * x.n, 0);
+const taxa = () => (entrega === "retirada" || subtotal() >= LOJA.gratis) ? 0 : LOJA.taxa;
+
+function atualizar(){
+  const n = carrinho.reduce((s, x) => s + x.n, 0);
+  $("barra").classList.toggle("on", n > 0);
+  $("barraQt").textContent = n + (n === 1 ? " item" : " itens");
+  $("barraTot").textContent = brl(subtotal());
+  desenharGaveta();
+}
+
+function desenharGaveta(){
+  if (!carrinho.length){
+    $("gb").innerHTML = '<p class="vaziocart">Seu pedido está vazio.<br>Escolha os produtos no catálogo.</p>';
+    $("gf").innerHTML = ""; return;
+  }
+  $("gb").innerHTML = carrinho.map((x, k) => `
+    <div class="it">
+      <img class="mini" src="${CDN(x.img)}" alt="" loading="lazy">
+      <div class="txt"><b>${x.nome}</b><span>${x.rot} · ${brl(x.preco)}</span>
+        <div class="mais">
+          <button data-menos="${k}" aria-label="Diminuir">−</button><b>${x.n}</b>
+          <button data-mais="${k}" aria-label="Aumentar">+</button>
+        </div>
+      </div>
+      <div class="pr">${brl(x.preco * x.n)}</div>
+    </div>`).join("") + `
+    <div class="campo"><label>Como você prefere receber?</label>
+      <div class="opc">
+        <button data-ent="entrega" class="${entrega === "entrega" ? "on" : ""}">Entrega</button>
+        <button data-ent="retirada" class="${entrega === "retirada" ? "on" : ""}">Retirar na loja</button>
+      </div></div>
+    <div class="campo"><label for="cNome">Seu nome</label><input id="cNome" placeholder="Como podemos te chamar"></div>
+    ${entrega === "entrega" ? `<div class="campo"><label for="cEnd">Endereço com número e bairro</label>
+      <textarea id="cEnd" placeholder="Rua, número, bairro e ponto de referência"></textarea></div>` : ""}
+    <div class="campo"><label for="cPg">Forma de pagamento</label>
+      <select id="cPg"><option>Pix</option><option>Cartão na entrega</option><option>Dinheiro</option></select></div>
+    <div class="campo"><label for="cObs">Observação (opcional)</label>
+      <input id="cObs" placeholder="Ex.: entregar depois das 18h"></div>`;
+
+  const s = subtotal(), t = taxa(), falta = LOJA.gratis - s;
+  $("gf").innerHTML = `
+    ${entrega === "entrega" && falta > 0
+      ? `<div class="falta">Faltam <b>${brl(falta)}</b> para a entrega sair de graça.</div>` : ""}
+    <div class="linha"><span>Subtotal</span><span>${brl(s)}</span></div>
+    <div class="linha"><span>${entrega === "retirada" ? "Retirada na loja" : "Entrega"}</span>
+      ${t === 0 ? "<b>grátis</b>" : `<span>${brl(t)}</span>`}</div>
+    <div class="linha total"><span>Total</span><span>${brl(s + t)}</span></div>
+    <button class="enviar" id="enviar">
+      <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.7 4.8-1.3A10 10 0 1 0 12 2zm5.8 14.2c-.2.7-1.4 1.3-2 1.4-.5.1-1.1.1-1.8-.1-.4-.1-1-.3-1.7-.6-3-1.3-4.9-4.3-5.1-4.5-.1-.2-1.2-1.5-1.2-2.9s.7-2 1-2.3c.2-.3.5-.4.7-.4h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .6l-.4.5-.3.3c-.1.1-.2.3-.1.5.1.2.6 1.1 1.4 1.8 1 .9 1.8 1.1 2 1.2.2.1.4.1.5-.1l.8-.9c.2-.2.3-.2.5-.1l2 1c.2.1.4.2.4.3.1.2.1.7-.1 1.3z"/></svg>
+      Enviar pedido pelo WhatsApp</button>`;
+}
+
+$("gb").addEventListener("click", e => {
+  const mais = e.target.closest("[data-mais]"), menos = e.target.closest("[data-menos]"),
+        ent  = e.target.closest("[data-ent]");
+  if (mais){ carrinho[+mais.dataset.mais].n++; atualizar(); }
+  if (menos){ const k = +menos.dataset.menos; if (--carrinho[k].n <= 0) carrinho.splice(k, 1); atualizar(); }
+  if (ent){ entrega = ent.dataset.ent; desenharGaveta(); }
+});
+
+const abre = v => { $("gav").classList.toggle("on", v); $("fundo").classList.toggle("on", v); };
+$("abrir").addEventListener("click", () => { desenharGaveta(); abre(true); });
+$("fechar").addEventListener("click", () => abre(false));
+$("fundo").addEventListener("click", () => abre(false));
+addEventListener("keydown", e => { if (e.key === "Escape") abre(false); });
+
+$("gf").addEventListener("click", e => {
+  if (!e.target.closest("#enviar")) return;
+  const v = id => { const el = $(id); return el ? el.value.trim() : ""; };
+  const nome = v("cNome");
+  if (!nome){ alert("Preencha seu nome para a loja saber quem está pedindo."); $("cNome").focus(); return; }
+  const end = v("cEnd");
+  if (entrega === "entrega" && !end){ alert("Informe o endereço da entrega."); $("cEnd").focus(); return; }
+
+  const s = subtotal(), t = taxa();
+  const linhas = [`*Novo pedido — ${LOJA.nome}*`, "", "*Itens*"];
+  carrinho.forEach(x => linhas.push(`• ${x.n}x ${x.nome} — ${x.rot} — ${brl(x.preco * x.n)}`));
+  linhas.push("", `Subtotal: ${brl(s)}`);
+  linhas.push(entrega === "retirada" ? "Retirada na loja" : (t === 0 ? "Entrega: grátis" : `Entrega: ${brl(t)}`));
+  linhas.push(`*Total: ${brl(s + t)}*`, "", `Nome: ${nome}`);
+  if (entrega === "entrega") linhas.push(`Endereço: ${end}`);
+  linhas.push(`Pagamento: ${v("cPg") || "Pix"}`);
+  if (v("cObs")) linhas.push(`Observação: ${v("cObs")}`);
+
+  window.open(zapBase + "?text=" + encodeURIComponent(linhas.join("\n")), "_blank");
+});
+
+render();
+</script>
+</body>
+</html>
